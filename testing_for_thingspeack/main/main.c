@@ -1,16 +1,17 @@
 #include <stdio.h>
+#include "wifi_info.h" //
 #include "esp_wifi.h"
 #include "esp_http_client.h"
 #include "nvs_flash.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
-const char* WIFI_SSID = "";//dit wifi namn
-const char* WIFI_PASS = "6";//din wifi pass
+const char* WIFI_SSID = ""; //dit wifi namn
+const char* WIFI_PASS = ""; //din wifi pass
 
 
-const char* thingspeak_api_key="";//din api key från thingspeack
-const char* thingspeak_url = "http://api.thingspeak.com/update";//oficial link
+const char* thingspeak_api_key = "HZMECBNFAPBM2U17"; //din api key från thingspeack
+const char* thingspeak_url = "http://api.thingspeak.com/update"; //oficial link
 
 void app_main(void)
 {
@@ -35,7 +36,7 @@ void app_main(void)
 
     // ==================== STEG 3: SKAPA EVENT LOOP ==============
     // Event loop = System som lyssnar på händelser (t.ex. WiFi ansluten/frånkopplad)
-    printf("Creating envent loop...\n");
+    printf("Creating event loop...\n");
     ESP_ERROR_CHECK(esp_event_loop_create_default());  // Skapa händelsesystem
     printf("Created event loop\n");
 
@@ -62,18 +63,18 @@ void app_main(void)
 
     wifi_config_t wifi_config={
         .sta = {
-            .ssid="",//din wifi namn 
-            .password="",//wifi pass
+            .ssid=WIFI_SSID,//din wifi namn 
+            .password=WIFI_PASS,//wifi pass
         },
     };
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA,&wifi_config));
     printf("WiFi konfigurerad för: %s\n", WIFI_SSID);
 
-        // ==================== STEG 8: ANSLUT TILL WIFI ====================
+    // ==================== STEG 8: ANSLUT TILL WIFI ====================
     printf("7. Ansluter till WiFi...\n");
     ESP_ERROR_CHECK(esp_wifi_connect());
     printf("Anslutning påbörjad!\n");
-        printf("8. Väntar på WiFi-anslutning...\n");
+    printf("8. Väntar på WiFi-anslutning...\n");
         
     int wifi_timeout = 0;
     while(1) {
