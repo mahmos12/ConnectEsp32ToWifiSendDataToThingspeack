@@ -2,4 +2,4 @@ build/
 sdkconfig
 sdkconfig.old
 .vscode
-wifi_info.h
+main/wifi_api_info.h
