@@ -59,7 +59,7 @@ void app_main(void)
     wifi_config_t wifi_config={
         .sta = {
             .ssid=WIFI_SSID,//din wifi namn 
-            .password=WIFI_SSID,//wifi pass
+            .password=WIFI_PASS,//wifi pass
         },
     };
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA,&wifi_config));
@@ -80,7 +80,7 @@ void app_main(void)
         }
         
         printf(".");
-        vTaskDelay(1000 / portTICK_PERIOD_MS);
+        vTaskDelay(2000 / portTICK_PERIOD_MS);
         
         if(wifi_timeout++ > 10) {  // Timeout efter 10 sekunder
             printf("WiFi timeout - ingen anslutning\n");
@@ -99,7 +99,7 @@ void app_main(void)
     
     char url_with_params[256];
     snprintf(url_with_params, sizeof(url_with_params),
-                "%s?api_key=%s&field1=200&field2=600",
+                "%s?api_key=%s&field1=10&field2=6",
                  thingspeak_url, API_WRITE_KEY);
     esp_http_client_set_url(client,url_with_params);
 
