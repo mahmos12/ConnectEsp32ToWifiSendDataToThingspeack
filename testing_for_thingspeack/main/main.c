@@ -6,11 +6,6 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
-const char* WIFI_SSID = ""; //dit wifi namn
-const char* WIFI_PASS = ""; //din wifi pass
-
-
-const char* thingspeak_api_key = "HZMECBNFAPBM2U17"; //din api key från thingspeack
 const char* thingspeak_url = "http://api.thingspeak.com/update"; //oficial link
 
 void app_main(void)
@@ -63,8 +58,8 @@ void app_main(void)
 
     wifi_config_t wifi_config={
         .sta = {
-            .ssid="",//din wifi namn 
-            .password="",//wifi pass
+            .ssid=WIFI_SSID,//din wifi namn 
+            .password=WIFI_SSID,//wifi pass
         },
     };
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA,&wifi_config));
@@ -105,7 +100,7 @@ void app_main(void)
     char url_with_params[256];
     snprintf(url_with_params, sizeof(url_with_params),
                 "%s?api_key=%s&field1=200&field2=600",
-                 thingspeak_url, thingspeak_api_key);
+                 thingspeak_url, API_WRITE_KEY);
     esp_http_client_set_url(client,url_with_params);
 
         // ==================== STEG 10: SKICKA DATA TILL THINGSPEAK ====================
