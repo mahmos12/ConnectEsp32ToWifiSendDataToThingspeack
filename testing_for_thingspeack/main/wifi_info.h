@@ -1,2 +1,2 @@
-#define SSID "name"
+#define SSID "name "
 #define PASS "password" 
