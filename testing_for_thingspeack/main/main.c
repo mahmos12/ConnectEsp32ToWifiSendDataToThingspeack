@@ -29,5 +29,7 @@ void app_main(void){
     data->field1 = 60;
     data->field2 = 11;
     api_write(data);
-    api_stop();
+    api_stop(data);
+
+   vTaskDelay(pdMS_TO_TICKS(1000));
 }
