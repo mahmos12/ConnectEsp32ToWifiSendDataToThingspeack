@@ -54,5 +54,17 @@ void api_read(Api_handle data){
     printf("9. läser data från ThingSpeak...\n");
     // Skicka HTTP request
     esp_err_t http_err = esp_http_client_perform(data->client);
-    data->client->response
+    // data->client->response
+     if(http_err==ESP_OK){
+        //om reuesten gick bra -> vi ska läsa data
+        int conten_lenght=esp_http_client_get_content_length(data->client);
+        char *buffer malloc(conten_lenght);
+        if(!buffer){
+            printf("kunde inte alokera minne ...");
+            return;
+        }
+        //esp_http_client_read_response();
+     }
+
+
 }
