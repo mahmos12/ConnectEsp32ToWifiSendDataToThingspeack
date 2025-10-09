@@ -49,7 +49,7 @@ void api_read(Api_handle data){
     char url_with_params[256];
     snprintf(url_with_params, sizeof(url_with_params),
                 "%s/channels/%d/feeds.json?api_key=%s&results=2",
-                 THINGSPEAK_URL, channel_id, API_READ_KEY);
+                 THINGSPEAK_URL, channel_ID, API_READ_KEY);
     esp_http_client_set_url(data->client, url_with_params);
     printf("9. läser data från ThingSpeak...\n");
     // Skicka HTTP request
@@ -58,7 +58,7 @@ void api_read(Api_handle data){
      if(http_err==ESP_OK){
         //om reuesten gick bra -> vi ska läsa data
         int conten_lenght=esp_http_client_get_content_length(data->client);
-        char *buffer malloc(conten_lenght);
+        char *buffer = malloc(conten_lenght+1);
         if(!buffer){
             printf("kunde inte alokera minne ...");
             return;
