@@ -1,16 +1,9 @@
-#include "esp_wifi.h"
-#include "esp_http_client.h"
-#include "wifi_api_info.h"
-
-/// @brief This functions starts the wifi and connects to the router
-/// @return 0 if something went wrong, 1 if it was successfull
+#include "wifi.h"
 int wifi_init(){
-    esp_err_t error_rc;
     // ==================== STEG 2: INITIERA NETWORK INTERFACE ====================
     // Network interface = TCP/IP stack - "språket" för internetkommunikation
     printf("Starting network interface...\n");
     ESP_ERROR_CHECK(esp_netif_init());  // Starta TCP/IP systemet
-    if(error_rc ==)
     printf("Network interface is up and ready\n");
     
     // ==================== STEG 3: SKAPA EVENT LOOP ==============
@@ -26,39 +19,40 @@ int wifi_init(){
     printf("Created Wifi station\n");
     
     // ==================== STEG 5: INITIERA WIFI-DRIVRUTINEN ====================
-    printf("Initializing Wifi ...\n");
+    printf("Initierar Wifi ...\n");
     wifi_init_config_t wif_config = WIFI_INIT_CONFIG_DEFAULT();  // Standard WiFi-inställningar
     ESP_ERROR_CHECK(esp_wifi_init(&wif_config));  // Starta WiFi-drivrutinen med inställningarna
-    printf("Initialized Wifi!\n");
+    printf("Initierarad Wifi!\n");
     
     // ==================== STEG 6: KONFIGURERA OCH STARTA WIFI ====================
-    printf("Setting the WiFi-mode...\n");
+    printf("5. Konfigurerar WiFi-läge...\n");
     ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));  // Sätt till Station-läge (ansluter till nätverk)
     
     ESP_ERROR_CHECK(esp_wifi_start());  // Starta WiFi-radion på chippet
-    printf("WiFi Started in station-mode!\n");
+    printf("WiFi startad i station-läge!\n");
     
     // ==================== STEG 7: KONFIGURERA WIFI-NÄTVERK ====================
+    
     wifi_config_t wifi_config={
         .sta = {
             .ssid=WIFI_SSID,
-            .password=WIFI_PASS
+            .password=WIFI_PASS,
         },
     };
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA,&wifi_config));
-    printf("WiFi is running on the network named: %s\n", WIFI_SSID);
+    printf("WiFi konfigurerad för: %s\n", WIFI_SSID);
 
     // ==================== STEG 8: ANSLUT TILL WIFI ====================
-    printf("Connecting to WiFi...\n");
+    printf("7. Ansluter till WiFi...\n");
     ESP_ERROR_CHECK(esp_wifi_connect());
-    printf("Communications has begun\n");
-    printf("Waiting on Wifi connection with router...\n");
+    printf("Anslutning påbörjad!\n");
+    printf("8. Väntar på WiFi-anslutning...\n");
         
     int wifi_timeout = 0;
     while(1) {
         wifi_ap_record_t ap_info;
         if(esp_wifi_sta_get_ap_info(&ap_info) == ESP_OK) {
-            printf("WiFi CONNESCTED!\nRSSI: %d dBm\n", ap_info.rssi);
+            printf("WiFi ANSLUTEN! RSSI: %d dBm\n", ap_info.rssi);
             return 1;
         }
         
@@ -66,7 +60,7 @@ int wifi_init(){
         vTaskDelay(2000 / portTICK_PERIOD_MS);
         
         if(wifi_timeout++ > 10) {  // Timeout efter 10 sekunder
-            printf("WiFi timeout - No connection made after 10 seconds of trying\n");
+            printf("WiFi timeout - ingen anslutning\n");
             return 0;
         }
     }
