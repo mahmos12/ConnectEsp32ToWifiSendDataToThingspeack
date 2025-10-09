@@ -57,13 +57,18 @@ void api_read(Api_handle data){
     // data->client->response
      if(http_err==ESP_OK){
         //om reuesten gick bra -> vi ska läsa data
-        int conten_lenght=esp_http_client_get_content_length(data->client);
-        char *buffer = malloc(conten_lenght+1);
-        if(!buffer){
-            printf("kunde inte alokera minne ...");
-            return;
-        }
-        //esp_http_client_read_response();
+        // int conten_lenght=esp_http_client_get_content_length(data->client);
+        // char *buffer = malloc(conten_lenght+1);
+        // if(!buffer){
+        //     printf("kunde inte alokera minne ...");
+        //     return;
+        // }
+        char buffer[1024];
+        int response=esp_http_client_read_response(data->client,buffer,sizeof(buffer)-1);
+        buffer[response]='\0';
+        printf("%s",buffer);
+        printf("\n Data från thingspeack: %d\t",response);
+        // free(buffer);
      }
 
 
