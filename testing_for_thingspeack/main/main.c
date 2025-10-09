@@ -37,7 +37,7 @@ void app_main(void){
     
     char url_with_params[256];
     snprintf(url_with_params, sizeof(url_with_params),
-                "%s?api_key=%s&field1=10&field2=6",
+                "%s?api_key=%s&field1=10 &field2=6",
                  thingspeak_url, API_WRITE_KEY);
     esp_http_client_set_url(client,url_with_params);
 
