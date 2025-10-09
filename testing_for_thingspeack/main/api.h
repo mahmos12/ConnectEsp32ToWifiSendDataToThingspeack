@@ -18,4 +18,4 @@ typedef Api_data_t *Api_handle;
 
 Api_handle api_start();
 int api_write(Api_handle data);
-void api_stop();
+void api_stop(Api_handle data);

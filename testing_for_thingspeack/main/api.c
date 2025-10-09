@@ -41,7 +41,6 @@ int api_write(Api_handle data){
 void api_stop(Api_handle data){
     // ==================== STEG 11: STÄDA UPP ====================
     esp_http_client_cleanup(data->client);
-    free(data);
     printf("ThingSpeak test avslutat!\n");
 }
 
@@ -56,4 +55,5 @@ void api_read(Api_handle data){
     printf("9. Skickar data till ThingSpeak...\n");
     // Skicka HTTP request
     esp_err_t http_err = esp_http_client_perform(data->client);
+    
 }
