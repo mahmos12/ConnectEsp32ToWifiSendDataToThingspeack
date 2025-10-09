@@ -1,29 +1,32 @@
-int api_start(){
+#include "api.h"
+
+Api_handle api_start(){
+    Api_handle data = (Api_handle)malloc(sizeof(Api_data_t));
+    assert(data != NULL);
     // ==================== STEG 9: TESTA THINGSPEAK ANSLUTNING ====================
     printf(" Testar ThingSpeak anslutning...\n");
-    esp_http_client_config_t config = {
-        .url=thingspeak_url,
-    };
-    esp_http_client_handle_t client = esp_http_client_init(&config);
+    esp_http_client_config_t config = { .url = thingspeak_url };
+    data->client = esp_http_client_init(&config);
+    return data;
 }
 
 
-int write_api(){
+int write_api(Api_handle data){
     // ==================== STEG 10: SKICKA DATA TILL THINGSPEAK ====================
     char url_with_params[256];
     snprintf(url_with_params, sizeof(url_with_params),
-                "%s?api_key=%s&field1=10&field2=6",
-                 thingspeak_url, API_WRITE_KEY);
-    esp_http_client_set_url(client,url_with_params);
-    
+                "%s?api_key=%s&field1=%d&field2=%d",
+                 thingspeak_url, API_WRITE_KEY,
+                 data->field1, data->field2);
+    esp_http_client_set_url(data->client, url_with_params);
+
     printf("9. Skickar data till ThingSpeak...\n");
-    
     // Skicka HTTP request
-    esp_err_t http_err = esp_http_client_perform(client);
+    esp_err_t http_err = esp_http_client_perform(data->client);
     
     if (http_err == ESP_OK) {
         // Läs statuskod från ThingSpeak
-        int status_code = esp_http_client_get_status_code(client);
+        int status_code = esp_http_client_get_status_code(data->client);
         printf("ThingSpeak svarade med status: %d\n", status_code);
         
         if (status_code == 200) {
@@ -36,8 +39,9 @@ int write_api(){
     }
     
     // ==================== STEG 11: STÄDA UPP ====================
-    esp_http_client_cleanup(client);
+    esp_http_client_cleanup(data->client);
     printf("ThingSpeak test avslutat!\n");
+    return 1;
 }
 
 void read_from_thingspeack(){
