@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "wifi.h"
+#include "api.h"
 #include "esp_http_client.h"
 #include "nvs_flash.h"
 #include "freertos/FreeRTOS.h"
@@ -24,5 +25,9 @@ void app_main(void){
         return;
     }
 
-   // Api här
+    Api_handle data = api_start();
+    data->field1 = 60;
+    data->field2 = 11;
+    api_write(data);
+    api_stop();
 }

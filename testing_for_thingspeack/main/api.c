@@ -10,8 +10,7 @@ Api_handle api_start(){
     return data;
 }
 
-
-int write_api(Api_handle data){
+int api_write(Api_handle data){
     // ==================== STEG 10: SKICKA DATA TILL THINGSPEAK ====================
     char url_with_params[256];
     snprintf(url_with_params, sizeof(url_with_params),
@@ -19,29 +18,31 @@ int write_api(Api_handle data){
                  thingspeak_url, API_WRITE_KEY,
                  data->field1, data->field2);
     esp_http_client_set_url(data->client, url_with_params);
-
     printf("9. Skickar data till ThingSpeak...\n");
     // Skicka HTTP request
     esp_err_t http_err = esp_http_client_perform(data->client);
-    
     if (http_err == ESP_OK) {
         // Läs statuskod från ThingSpeak
         int status_code = esp_http_client_get_status_code(data->client);
         printf("ThingSpeak svarade med status: %d\n", status_code);
-        
         if (status_code == 200) {
             printf("FRAMGÅNG! Data skickad till ThingSpeak!\n");
+            return 1;
         } else {
             printf("ThingSpeak svarade med felkod: %d\n", status_code);
+            return -1;
         }
     } else {
         printf("Kunde inte skicka till ThingSpeak: %s\n", esp_err_to_name(http_err));
+        return 0;
     }
-    
+}
+
+void api_stop(Api_handle data){
+    free(data);
     // ==================== STEG 11: STÄDA UPP ====================
     esp_http_client_cleanup(data->client);
-    printf("ThingSpeak test avslutat!\n");
-    return 1;
+    printf("ThingSpeak test avslutat!\n") 
 }
 
 void read_from_thingspeack(){
