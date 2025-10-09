@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "wifi_api_info.h" //
+#include "wifi_api_info.h"
 #include "esp_wifi.h"
 #include "esp_http_client.h"
 #include "nvs_flash.h"
@@ -8,8 +8,7 @@
 
 const char* thingspeak_url = "http://api.thingspeak.com/update"; //oficial link
 
-void app_main(void)
-{
+void app_main(void){
     // ==================== STEG 1: INITIERA NVS ====================
     // // NVS = "Non-Volatile Storage" - minne som sparar data även utan ström
     esp_err_t ret = nvs_flash_init();
