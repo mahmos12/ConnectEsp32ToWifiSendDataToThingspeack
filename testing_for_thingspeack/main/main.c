@@ -22,7 +22,7 @@ void app_main(void){
 
     if(!wifi_init()){
         printf("Wifi could not be started\n");
-        return 0;
+        return;
     }
 
     // ==================== STEG 9: TESTA THINGSPEAK ANSLUTNING ====================
