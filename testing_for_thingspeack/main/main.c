@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "wifi.h"
+#include "esp_http_client.h"
 #include "nvs_flash.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
