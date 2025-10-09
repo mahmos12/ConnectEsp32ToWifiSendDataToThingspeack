@@ -55,5 +55,6 @@ void api_read(Api_handle data){
     printf("9. läser data från ThingSpeak...\n");
     // Skicka HTTP request
     esp_err_t http_err = esp_http_client_perform(data->client);
+    
 
 }
