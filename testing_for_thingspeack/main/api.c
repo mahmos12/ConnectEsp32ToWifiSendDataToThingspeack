@@ -39,13 +39,13 @@ int api_write(Api_handle data){
 }
 
 void api_stop(Api_handle data){
-    free(data);
     // ==================== STEG 11: STÄDA UPP ====================
     esp_http_client_cleanup(data->client);
-    printf("ThingSpeak test avslutat!\n") 
+    free(data);
+    printf("ThingSpeak test avslutat!\n");
 }
 
-void api_read(){
+void api_read(Api_handle data){
     int channel_ID = 3103134;
     char url_with_params[256];
     snprintf(url_with_params, sizeof(url_with_params),
