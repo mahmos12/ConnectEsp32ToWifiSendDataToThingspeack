@@ -52,7 +52,7 @@ void api_read(Api_handle data){
                  READ_THINGSPEAK_URL, API_READ_KEY,
                  data->field1, data->field2);
     esp_http_client_set_url(data->client, url_with_params);
-    printf("9. Skickar data till ThingSpeak...\n");
+    printf("9. läser data från ThingSpeak...\n");
     // Skicka HTTP request
     esp_err_t http_err = esp_http_client_perform(data->client);
 }
