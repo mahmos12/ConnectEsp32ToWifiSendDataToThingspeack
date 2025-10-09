@@ -4,7 +4,8 @@
 #include "stdlib.h"
 #include "assert.h"
 
-#define thingspeak_url "http://api.thingspeak.com/update"
+#define WRITE_THINGSPEAK_URL "http://api.thingspeak.com"
+#define READ_THINGSPEAK_URL "http://api.thingspeak.com/channels"
 
 typedef struct Api_data_t{
     int field1;

@@ -5,7 +5,7 @@ Api_handle api_start(){
     assert(data != NULL);
     // ==================== STEG 9: TESTA THINGSPEAK ANSLUTNING ====================
     printf(" Testar ThingSpeak anslutning...\n");
-    esp_http_client_config_t config = { .url = thingspeak_url };
+    esp_http_client_config_t config = { .url = WRITE_THINGSPEAK_URL };
     data->client = esp_http_client_init(&config);
     return data;
 }
@@ -14,8 +14,8 @@ int api_write(Api_handle data){
     // ==================== STEG 10: SKICKA DATA TILL THINGSPEAK ====================
     char url_with_params[256];
     snprintf(url_with_params, sizeof(url_with_params),
-                "%s?api_key=%s&field1=%d&field2=%d",
-                 thingspeak_url, API_WRITE_KEY,
+                "%s/update?api_key=%s&field1=%d&field2=%d",
+                 WRITE_THINGSPEAK_URL, API_WRITE_KEY,
                  data->field1, data->field2);
     esp_http_client_set_url(data->client, url_with_params);
     printf("9. Skickar data till ThingSpeak...\n");
@@ -45,6 +45,15 @@ void api_stop(Api_handle data){
     printf("ThingSpeak test avslutat!\n") 
 }
 
-void read_from_thingspeack(){
-    
+void api_read(){
+    int channel_ID = 3103134;
+    char url_with_params[256];
+    snprintf(url_with_params, sizeof(url_with_params),
+                "%s?api_key=%s&field1=%d&field2=%d",
+                 READ_THINGSPEAK_URL, API_READ_KEY,
+                 data->field1, data->field2);
+    esp_http_client_set_url(data->client, url_with_params);
+    printf("9. Skickar data till ThingSpeak...\n");
+    // Skicka HTTP request
+    esp_err_t http_err = esp_http_client_perform(data->client);
 }
