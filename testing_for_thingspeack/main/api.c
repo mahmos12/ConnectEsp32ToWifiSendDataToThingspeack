@@ -1,23 +1,21 @@
-int api_start
+int api_start(){
+    // ==================== STEG 9: TESTA THINGSPEAK ANSLUTNING ====================
+    printf(" Testar ThingSpeak anslutning...\n");
+    esp_http_client_config_t config = {
+        .url=thingspeak_url,
+    };
+    esp_http_client_handle_t client = esp_http_client_init(&config);
+}
 
 
 int write_api(){
-    // ==================== STEG 9: TESTA THINGSPEAK ANSLUTNING ====================
-    printf(" Testar ThingSpeak anslutning...\n");
-
-    esp_http_client_config_t config={
-        .url=thingspeak_url,
-    };
-
-    esp_http_client_handle_t client=esp_http_client_init(&config);
-    
+    // ==================== STEG 10: SKICKA DATA TILL THINGSPEAK ====================
     char url_with_params[256];
     snprintf(url_with_params, sizeof(url_with_params),
                 "%s?api_key=%s&field1=10&field2=6",
                  thingspeak_url, API_WRITE_KEY);
     esp_http_client_set_url(client,url_with_params);
-
-        // ==================== STEG 10: SKICKA DATA TILL THINGSPEAK ====================
+    
     printf("9. Skickar data till ThingSpeak...\n");
     
     // Skicka HTTP request

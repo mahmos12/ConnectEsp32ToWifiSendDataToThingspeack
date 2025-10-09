@@ -5,8 +5,6 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
-const char* thingspeak_url = "http://api.thingspeak.com/update"; //oficial link
-
 void app_main(void){
     // ==================== STEG 1: INITIERA NVS ====================
     // // NVS = "Non-Volatile Storage" - minne som sparar data även utan ström
@@ -37,7 +35,7 @@ void app_main(void){
     
     char url_with_params[256];
     snprintf(url_with_params, sizeof(url_with_params),
-                "%s?api_key=%s&field1=10 &field2=6",
+                "%s?api_key=%s&field1=10&field2=6",
                  thingspeak_url, API_WRITE_KEY);
     esp_http_client_set_url(client,url_with_params);
 
