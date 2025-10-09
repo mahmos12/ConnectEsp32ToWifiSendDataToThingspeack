@@ -48,9 +48,8 @@ void api_read(Api_handle data){
     int channel_ID = 3103134;
     char url_with_params[256];
     snprintf(url_with_params, sizeof(url_with_params),
-                "%s?api_key=%s&field1=%d&field2=%d",
-                 READ_THINGSPEAK_URL, API_READ_KEY,
-                 data->field1, data->field2);
+                "%s/channels/%d/feeds.json?api_key=%s&results=2",
+                 THINGSPEAK_URL, channel_id, API_READ_KEY);
     esp_http_client_set_url(data->client, url_with_params);
     printf("9. läser data från ThingSpeak...\n");
     // Skicka HTTP request
